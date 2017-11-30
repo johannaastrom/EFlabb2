@@ -23,6 +23,7 @@ namespace EFlabb2
         public MainWindow()
         {
             InitializeComponent();
+            //HELLO
         }
     }
 }
