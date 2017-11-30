@@ -14,5 +14,8 @@ namespace EFlabb2
         public int LevelId { get; set; }
         public int PlayerId { get; set; }
         public int Score { get; set; }
+
+        public virtual IList<Level> Level { get; set; }
+        public virtual IList<Player> Player { get; set; }
     }
 }

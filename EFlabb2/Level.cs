@@ -11,6 +11,6 @@ namespace EFlabb2
         public const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AngryBirds;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public int LevelId { get; set; }
-        public int AVailableMoves { get; set; }
+        public int AvailableMoves { get; set; }
     }
 }
