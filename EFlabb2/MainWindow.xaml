@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" Margin="44,57,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206"/>
+        <TextBox x:Name="LevelTextBox" HorizontalAlignment="Left" Height="23" Margin="44,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206"/>
+        <TextBox x:Name="MovesTextBox" HorizontalAlignment="Left" Height="23" Margin="44,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" RenderTransformOrigin="0.175,-0.635"/>
+        <Label x:Name="Label1" Content="Enter your name:" HorizontalAlignment="Left" Margin="44,31,0,0" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="Label2" Content="Enter what level to play between 1-3:" HorizontalAlignment="Left" Margin="44,80,0,0" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="Label3" Content="Enter how many moves you used:" HorizontalAlignment="Left" Margin="44,124,0,0" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="NameLabel" Content="Label for name" HorizontalAlignment="Left" Margin="44,218,0,0" VerticalAlignment="Top" Width="146"/>
+        <Label x:Name="ScoreLabel" Content="Label for score" HorizontalAlignment="Left" Margin="44,248,0,0" VerticalAlignment="Top" Width="165"/>
+
     </Grid>
 </Window>

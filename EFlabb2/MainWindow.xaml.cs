@@ -20,10 +20,11 @@ namespace EFlabb2
     /// </summary>
     public partial class MainWindow : Window
     {
+        public const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AngryBirds;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
         public MainWindow()
         {
             InitializeComponent();
-            //HELLO
         }
     }
 }
