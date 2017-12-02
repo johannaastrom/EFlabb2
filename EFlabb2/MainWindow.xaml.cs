@@ -31,13 +31,32 @@ namespace EFlabb2
             GetLevelDataById(2); //by available moves??
             GetRoundDataByScore(2); // by score??
         }
+
+        public void Add(GameContext context) //ändra till passande namn på add
+        {
+            Player p = new Player();
+            p.Name = "Johanna";
+            p.Rounds = new Round();
+
+            Round r = new Round();
+            r.RoundId = 2;
+            r.Score = 3;
+            //r.PlayerId = ??
+            //r.LevelId = ??
+            //r.Player = p;
+
+            //p.Rounds.Add(r);
+            context.Players.Add(p);
+            context.SaveChanges();
+        }
+
         public Player GetPlayerDataByName(string playerName)
         {
             using (GameContext context = new GameContext(connectionString))
             {
                 return (from x in context.Players.Include("Level").Include("Round")
                         where x.Name == playerName
-                        select x).SingleOrDefault();
+                        select x).SingleOrDefault(); //'Unable to determine the principal end of an association between the types 'EFlabb2.Round' and 'EFlabb2.Player'. The principal end of this association must be explicitly configured using either the relationship fluent API or data annotations.'
             }
             #region
             //return query.SingleOrDefault();
