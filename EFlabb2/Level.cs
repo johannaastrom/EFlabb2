@@ -12,6 +12,8 @@ namespace EFlabb2
     {
         public const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AngryBirdsGame;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
+        //här letar EF efter publika properties som den gör till kolumner i tabellen.
+
         [Key]
         public int LevelId { get; set; }
         public int AvailableMoves { get; set; }
