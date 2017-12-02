@@ -22,14 +22,14 @@ namespace EFlabb2
     /// </summary>
     public partial class MainWindow : Window
     {
-        public const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AngryBirds;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AngryBirdsGame;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public MainWindow()
         {
             InitializeComponent();
             Player player = GetPlayerDataByName("Evert");
-            GetLevelData();
-            GetRoundData();
+            GetLevelDataById(2); //by available moves??
+            GetRoundDataByScore(2); // by score??
         }
         public Player GetPlayerDataByName(string playerName)
         {
@@ -39,8 +39,7 @@ namespace EFlabb2
                         where x.Name == playerName
                         select x).SingleOrDefault();
             }
-
-
+            #region
             //return query.SingleOrDefault();
 
             //using (SqlConnection con = new SqlConnection(connectionString))
@@ -60,11 +59,18 @@ namespace EFlabb2
             //        }
             //    }
             //}
+#endregion
         }
 
-        public void GetLevelData()
+        public Level GetLevelDataById(int playerid)
         {
-
+            using (GameContext context = new GameContext(connectionString))
+            {
+                return (from x in context.Levels.Include("Player").Include("Round")
+                        where x.LevelId == playerid //kolla detta villkor. by x.availablemoves?? döp om playerid?
+                        select x).SingleOrDefault();
+            }
+            #region
             //using (SqlConnection con = new SqlConnection(connectionString))
             //{
             //    con.Open();
@@ -82,29 +88,39 @@ namespace EFlabb2
             //        }
             //    }
             //}
+            #endregion
+
         }
 
-        public void GetRoundData()
+        public Round GetRoundDataByScore(int roundid)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (GameContext context = new GameContext(connectionString))
             {
-                con.Open();
-                var query = "SELECT * FROM Round";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        //Round r = new Round();
-                        //r.RoundId = reader.GetInt32(0);
-                        //r.LevelId = reader.GetInt32(1);
-                        //r.PlayerId = reader.GetInt32(2);
-                        //r.Score = reader.GetInt32(3);
-
-                        //RoundListBox.Items.Add(r);
-                    }
-                }
+                return (from x in context.Rounds.Include("Player").Include("Level")
+                        where x.RoundId == roundid //kolla detta villkor. by x.roundid?? döp om roundid till score?
+                        select x).SingleOrDefault();
             }
+            #region
+            //using (SqlConnection con = new SqlConnection(connectionString))
+            //{
+            //    con.Open();
+            //    var query = "SELECT * FROM Round";
+            //    using (SqlCommand cmd = new SqlCommand(query, con))
+            //    using (SqlDataReader reader = cmd.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            //Round r = new Round();
+            //            //r.RoundId = reader.GetInt32(0);
+            //            //r.LevelId = reader.GetInt32(1);
+            //            //r.PlayerId = reader.GetInt32(2);
+            //            //r.Score = reader.GetInt32(3);
+
+            //            //RoundListBox.Items.Add(r);
+            //        }
+            //    }
+            //}
+            #endregion
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
