@@ -15,17 +15,10 @@ namespace EFlabb2
 
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
-        
-    }
 
-    public class GameContext : DbContext
-    {
-        public const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AngryBirdsGame;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-        public GameContext(string connectionString) : base(connectionString) { }
-        public DbSet<Player> Players { get; set; }
-        public DbSet<Level> Levels { get; set; }
-        public DbSet<Round> Rounds { get; set; }
+        public virtual Level Level { get; set; }
+        //A specified Include path is not valid. The EntityType 'EFlabb2.Player' does not declare a navigation property with the name 'Level'.'
     }
 }

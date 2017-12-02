@@ -166,7 +166,7 @@ namespace EFlabb2
                     command.ExecuteNonQuery();
                     MessageBox.Show("Score has been updated!");
 
-                    GetRoundData();
+                    //GetRoundData();
 
                     for (int i = 0; i < RoundListBox.Items.Count; i++)
                     {

@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EFlabb2
+{
+    public class GameContext : DbContext
+    {
+        public const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AngryBirdsGame;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+        public GameContext(string connectionString) : base(connectionString) { }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<Round> Rounds { get; set; }
+
+        //PM> Enable-Migrations
+        //Checking if the context targets an existing database...
+        //The target context 'EFlabb2.GameContext' is not constructible. Add a default constructor or provide an implementation of IDbContextFactory.
+        //PM>           felmeddelande från package manager console
+    }
+}
