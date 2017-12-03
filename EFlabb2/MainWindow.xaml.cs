@@ -116,15 +116,19 @@ namespace EFlabb2
                     {
                         Player newPlayer = new Player();
                         newPlayer.Name = NameTextBox.Text;
-                        context.Players.Add(newPlayer);now 
+                        context.Players.Add(newPlayer);
+                        context.SaveChanges();
                         Round newRound = new Round();
                         newRound.Score = int.Parse(MovesTextBox.Text);
+                        newRound.LevelId = int.Parse(LevelTextBox.Text);
+                        newRound.PlayerId = newPlayer.Id;
                         context.Rounds.Add(newRound);
+                        context.SaveChanges();
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("FEL");
+                    MessageBox.Show("Nu blev det lite tokigt.");
                 }
             }
         }
