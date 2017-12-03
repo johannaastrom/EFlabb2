@@ -12,14 +12,14 @@
         <TextBox x:Name="MovesTextBox" HorizontalAlignment="Left" Height="23" Margin="44,150,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" RenderTransformOrigin="0.175,-0.635"/>
         <Label x:Name="Label1" Content="Enter your name:" HorizontalAlignment="Left" Margin="44,31,0,0" VerticalAlignment="Top" Width="206"/>
         <Label x:Name="Label2" Content="Enter what level to play between 1-3:" HorizontalAlignment="Left" Margin="44,80,0,0" VerticalAlignment="Top" Width="206"/>
-        <Label x:Name="Label3" Content="Enter how many moves you used:" HorizontalAlignment="Left" Margin="44,124,0,0" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="Label3" Content="Enter how many moves you used(1-3):" HorizontalAlignment="Left" Margin="44,124,0,0" VerticalAlignment="Top" Width="250"/>
         <Label x:Name="NameLabel" Content="Label for name" HorizontalAlignment="Left" Margin="44,218,0,0" VerticalAlignment="Top" Width="146"/>
         <Label x:Name="ScoreLabel" Content="Label for score" HorizontalAlignment="Left" Margin="44,248,0,0" VerticalAlignment="Top" Width="165"/>
         <ListBox x:Name="PlayerNamesListBox" HorizontalAlignment="Left" Height="81" Margin="450,25,0,0" VerticalAlignment="Top" Width="266" DisplayMemberPath="Name"/>
         <ListBox x:Name="LevelListBox" HorizontalAlignment="Left" Height="76" Margin="450,124,0,0" VerticalAlignment="Top" Width="266" DisplayMemberPath="LevelId"/>
         <ListBox x:Name="RoundListBox" HorizontalAlignment="Left" Height="82" Margin="450,218,0,0" VerticalAlignment="Top" Width="266" DisplayMemberPath="RoundId"/>
-        <Button x:Name="AddButton" Content="Add" HorizontalAlignment="Left" Margin="44,185,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Button Content="Update score" HorizontalAlignment="Left" Margin="166,185,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="AddButton" Content="Save" HorizontalAlignment="Left" Margin="44,185,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Onödig" HorizontalAlignment="Left" Margin="317,330,0,0" VerticalAlignment="Top" Width="75"/>
 
     </Grid>
 </Window>

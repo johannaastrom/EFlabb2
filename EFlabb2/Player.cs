@@ -17,18 +17,18 @@ namespace EFlabb2
 
         [Key]
         public int Id { get; set; }
-
         public string Name { get; set; }
+
 
         //public List<Level> Levels { get; set; } // ska detta vara i plural eller singular? 
         //public List<Round> Rounds { get; set; } // ska detta vara i plural eller singular? 
 
         //Relations
         //Level 1:n Player
-        //Level  Round
-        //Player  Level
-        //Player  Round
-        //Round  Player
-        //Round  Level
+        //Level 1:n Round
+        //Player 1:n Level
+        //Player 1:n Round
+        //Round 1:1 Player
+        //Round 1:1 Level
     }
 }

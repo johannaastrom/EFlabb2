@@ -54,155 +54,84 @@ namespace EFlabb2
         {
             using (GameContext context = new GameContext(connectionString))
             {
-                return (from x in context.Players/*.Include("Levels").Include("Rounds")*/
+                return (from x in context.Players
                         where x.Name == playerName
-                        select x).SingleOrDefault(); 
+                        select x).SingleOrDefault();
             }
-            #region
-            //return query.SingleOrDefault();
+        }
 
-            //using (SqlConnection con = new SqlConnection(connectionString))
-            //{
-            //    con.Open();
-            //    var query = "SELECT * FROM Player";
-            //    using (SqlCommand cmd = new SqlCommand(query, con))
-            //    using (SqlDataReader reader = cmd.ExecuteReader())
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            Player p = new Player();
-            //            p.Id = reader.GetInt32(0);
-            //            p.Name = reader.GetString(1);
-
-            //            PlayerNamesListBox.Items.Add(p);
-            //        }
-            //    }
-            //}
-#endregion
+        public Round GetRoundDataByPlayerIdLevelId(int playerId, int levelId)
+        {
+            using (GameContext context = new GameContext(connectionString))
+            {
+                return (from x in context.Rounds.Include("Player").Include("Level")
+                        where x.PlayerId == playerId && x.LevelId == levelId //kolla detta villkor. by x.roundid?? döp om roundid till score?
+                        select x).SingleOrDefault();
+            }
         }
 
         public Level GetLevelDataById(int playerid)
         {
             using (GameContext context = new GameContext(connectionString))
             {
-                return (from x in context.Levels.Include("Players").Include("Rounds")
+                return (from x in context.Levels
                         where x.LevelId == playerid //kolla detta villkor. by x.availablemoves?? döp om playerid?
                         select x).SingleOrDefault();
             }
-            #region
-            //using (SqlConnection con = new SqlConnection(connectionString))
-            //{
-            //    con.Open();
-            //    var query = "SELECT * FROM Level";
-            //    using (SqlCommand cmd = new SqlCommand(query, con))
-            //    using (SqlDataReader reader = cmd.ExecuteReader())
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            Level l = new Level();
-            //            l.LevelId = reader.GetInt32(0);
-            //            l.AvailableMoves = reader.GetInt32(1);
-
-            //            LevelListBox.Items.Add(l);
-            //        }
-            //    }
-            //}
-            #endregion
-
         }
 
         public Round GetRoundDataByScore(int roundid)
         {
             using (GameContext context = new GameContext(connectionString))
             {
-                return (from x in context.Rounds.Include("Players").Include("Levels")
+                return (from x in context.Rounds.Include("Player").Include("Level")
                         where x.RoundId == roundid //kolla detta villkor. by x.roundid?? döp om roundid till score?
                         select x).SingleOrDefault();
             }
-            #region
-            //using (SqlConnection con = new SqlConnection(connectionString))
-            //{
-            //    con.Open();
-            //    var query = "SELECT * FROM Round";
-            //    using (SqlCommand cmd = new SqlCommand(query, con))
-            //    using (SqlDataReader reader = cmd.ExecuteReader())
-            //    {
-            //        while (reader.Read())
-            //        {
-            //            //Round r = new Round();
-            //            //r.RoundId = reader.GetInt32(0);
-            //            //r.LevelId = reader.GetInt32(1);
-            //            //r.PlayerId = reader.GetInt32(2);
-            //            //r.Score = reader.GetInt32(3);
-
-            //            //RoundListBox.Items.Add(r);
-            //        }
-            //    }
-            //}
-            #endregion
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (GameContext context = new GameContext(connectionString))
             {
                 try
                 {
-                    //if name does not exist in data base = add new name to data base. if name exist - update score if its lower than the existing one.
-                    connection.Open();
+                    Player player = GetPlayerDataByName(NameTextBox.Text);
 
-                    string query = "INSERT INTO Player (Name) VALUES (@Name)";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("Name", NameTextBox.Text);
-                    command.ExecuteNonQuery();
-                    MessageBox.Show("A new Player Name has been created!");  // ta bort innann redovisning
-
-                    PlayerNamesListBox.Items.Clear();
-                    //GetPlayerDataByName();
+                    if (player != null)
+                    {
+                        Round round = GetRoundDataByPlayerIdLevelId(player.Id, int.Parse(LevelTextBox.Text));
+                        if (round != null)
+                        {
+                            if (round.Score > int.Parse(MovesTextBox.Text))
+                            {
+                                int level = int.Parse(LevelTextBox.Text);
+                                var r = context.Rounds.Where(rr => rr.PlayerId == round.PlayerId && rr.LevelId == level).SingleOrDefault();
+                                r.Score = int.Parse(MovesTextBox.Text);
+                                context.SaveChanges();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Player newPlayer = new Player();
+                        newPlayer.Name = NameTextBox.Text;
+                        context.Players.Add(newPlayer);now 
+                        Round newRound = new Round();
+                        newRound.Score = int.Parse(MovesTextBox.Text);
+                        context.Rounds.Add(newRound);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    connection.Close();
+                    MessageBox.Show("FEL");
                 }
             }
         }
 
         private void UpdateButton1_Click(object sender, RoutedEventArgs e)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-
-                    string query = "UPDATE Round SET " + " Score = '" + MovesTextBox.Text + "' ";
-
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.ExecuteNonQuery();
-                    MessageBox.Show("Score has been updated!");
-
-                    //GetRoundData();
-
-                    for (int i = 0; i < RoundListBox.Items.Count; i++)
-                    {
-                        RoundListBox.Items.RemoveAt(0);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    connection.Close();
-                }
-            }
         }
-
     }
 }
 

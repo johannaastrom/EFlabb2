@@ -17,5 +17,11 @@ namespace EFlabb2
 
         public int AvailableMoves { get; set; }
 
+        //public List<Round> Rounds { get; set; }
+        //public List<Player> Players { get; set; }
+
+
+        //Level 1:n Player
+        //Level 1:n Round
     }
 }
