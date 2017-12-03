@@ -36,7 +36,7 @@ namespace EFlabb2
         {
             Player p = new Player();
             p.Name = "Johanna";
-            p.Rounds = new Round();
+            //p.Rounds = new Round();
 
             Round r = new Round();
             r.RoundId = 2;
@@ -54,9 +54,9 @@ namespace EFlabb2
         {
             using (GameContext context = new GameContext(connectionString))
             {
-                return (from x in context.Players.Include("Level").Include("Round")
+                return (from x in context.Players/*.Include("Levels").Include("Rounds")*/
                         where x.Name == playerName
-                        select x).SingleOrDefault(); //'Unable to determine the principal end of an association between the types 'EFlabb2.Round' and 'EFlabb2.Player'. The principal end of this association must be explicitly configured using either the relationship fluent API or data annotations.'
+                        select x).SingleOrDefault(); 
             }
             #region
             //return query.SingleOrDefault();
@@ -85,7 +85,7 @@ namespace EFlabb2
         {
             using (GameContext context = new GameContext(connectionString))
             {
-                return (from x in context.Levels.Include("Player").Include("Round")
+                return (from x in context.Levels.Include("Players").Include("Rounds")
                         where x.LevelId == playerid //kolla detta villkor. by x.availablemoves?? döp om playerid?
                         select x).SingleOrDefault();
             }
@@ -115,7 +115,7 @@ namespace EFlabb2
         {
             using (GameContext context = new GameContext(connectionString))
             {
-                return (from x in context.Rounds.Include("Player").Include("Level")
+                return (from x in context.Rounds.Include("Players").Include("Levels")
                         where x.RoundId == roundid //kolla detta villkor. by x.roundid?? döp om roundid till score?
                         select x).SingleOrDefault();
             }
