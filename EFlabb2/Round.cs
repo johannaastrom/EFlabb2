@@ -15,7 +15,7 @@ namespace EFlabb2
 
         [Key]
         public int RoundId { get; set; }
-        public int Score { get; set; }
+        public int UsedMoves { get; set; }
 
         public int PlayerId { get; set; }
         [ForeignKey("PlayerId")]

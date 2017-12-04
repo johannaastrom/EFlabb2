@@ -27,8 +27,7 @@ namespace EFlabb2
         public MainWindow()
         {
             InitializeComponent();
-            PrintListBoxInfo();
-
+            PrintListBoxInfo(); 
         }
         public void PrintListBoxInfo()
         {
@@ -97,7 +96,7 @@ namespace EFlabb2
             using (GameContext context = new GameContext(connectionString))
             {
                 return (from x in context.Levels
-                        where x.LevelId == playerid //kolla detta villkor. by x.availablemoves?? döp om playerid?
+                        where x.LevelId == playerid 
                         select x).SingleOrDefault();
             }
         }
@@ -107,8 +106,18 @@ namespace EFlabb2
             using (GameContext context = new GameContext(connectionString))
             {
                 return (from x in context.Rounds.Include("Player").Include("Level")
-                        where x.RoundId == roundid //kolla detta villkor. by x.roundid?? döp om roundid till score?
+                        where x.RoundId == roundid 
                         select x).SingleOrDefault();
+            }
+        }
+
+        public void ScoreCounted()
+        {
+            using (GameContext context = new GameContext(connectionString))
+            {
+                var query = from r in context.Rounds
+                            join l in context.Levels on r.LevelId equals l.LevelId
+                            select new { Score = l.AvailableMoves - r.UsedMoves };
             }
         }
 
@@ -125,11 +134,11 @@ namespace EFlabb2
                         Round round = GetRoundDataByPlayerIdLevelId(player.Id, int.Parse(LevelTextBox.Text));
                         if (round != null)
                         {
-                            if (round.Score > int.Parse(MovesTextBox.Text))
+                            if (round.UsedMoves > int.Parse(MovesTextBox.Text))
                             {
                                 int level = int.Parse(LevelTextBox.Text);
                                 var r = context.Rounds.Where(rr => rr.PlayerId == round.PlayerId && rr.LevelId == level).SingleOrDefault();
-                                r.Score = int.Parse(MovesTextBox.Text);
+                                r.UsedMoves = int.Parse(MovesTextBox.Text);
                                 context.SaveChanges();
 
                                 PlayerNamesListBox.Items.Clear();
@@ -146,10 +155,14 @@ namespace EFlabb2
                         context.Players.Add(newPlayer);
                         context.SaveChanges();
                         Round newRound = new Round();
-                        newRound.Score = int.Parse(MovesTextBox.Text);
+                        newRound.UsedMoves = int.Parse(MovesTextBox.Text);
                         newRound.LevelId = int.Parse(LevelTextBox.Text);
                         newRound.PlayerId = newPlayer.Id;   
                         context.Rounds.Add(newRound);
+                        Level newLevel = new Level();
+                        newLevel.AvailableMoves = int.Parse(LevelTextBox.Text);
+                        newLevel.LevelId = int.Parse(LevelTextBox.Text);
+                        context.Levels.Add(newLevel);
                         context.SaveChanges();
 
                         PlayerNamesListBox.Items.Clear();
@@ -160,10 +173,6 @@ namespace EFlabb2
                     NameTextBox.Text = string.Empty;
                     LevelTextBox.Text = string.Empty;
                     MovesTextBox.Text = string.Empty;
-                    //PlayerNamesListBox.Items.Clear();
-                    //LevelListBox.Items.Clear();
-                    //RoundListBox.Items.Clear();
-                    //PrintListBoxInfo();
                 }
 
                 catch (Exception ex)
@@ -174,6 +183,27 @@ namespace EFlabb2
         }
 
         private void UpdateButton1_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void PlayerNamesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PrintPlayerScoreListBox.Items.Clear();
+
+            using (GameContext context = new GameContext(connectionString))
+            {
+                var query = from round in context.Rounds.ToList()
+                            join l in context.Levels on round.LevelId equals l.LevelId
+                            where round.PlayerId == PlayerNamesListBox.SelectedIndex
+                            select new { Level = round.LevelId, UsedMoves = round.UsedMoves, MovesLeft = l.AvailableMoves - round.UsedMoves };
+                foreach (var x in query)
+                {
+                    PrintPlayerScoreListBox.Items.Add(x);
+                }
+            }
+        }
+
+        private void PrintPlayerLevelListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
     }
