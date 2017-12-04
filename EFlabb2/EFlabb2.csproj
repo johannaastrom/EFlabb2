@@ -62,6 +62,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GameContext.cs" />
+    <Compile Include="Migrations\201712041337188_changes.cs" />
+    <Compile Include="Migrations\201712041337188_changes.Designer.cs">
+      <DependentUpon>201712041337188_changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Round.cs" />
     <Page Include="MainWindow.xaml">
@@ -93,6 +97,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\201712041337188_changes.resx">
+      <DependentUpon>201712041337188_changes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

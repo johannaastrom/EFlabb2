@@ -11,8 +11,8 @@
         <TextBox x:Name="LevelTextBox" HorizontalAlignment="Left" Height="23" Margin="44,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206"/>
         <TextBox x:Name="MovesTextBox" HorizontalAlignment="Left" Height="23" Margin="44,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" RenderTransformOrigin="0.175,-0.635"/>
         <Label x:Name="Label1" Content="Enter your name:" HorizontalAlignment="Left" Margin="44,7,0,0" VerticalAlignment="Top" Width="206"/>
-        <Label x:Name="Label2" Content="Enter what level to play between:" HorizontalAlignment="Left" Margin="44,60,0,0" VerticalAlignment="Top" Width="206"/>
-        <Label x:Name="Label3" Content="Enter how many moves you used:" HorizontalAlignment="Left" Margin="44,106,0,0" VerticalAlignment="Top" Width="250"/>
+        <Label x:Name="Label2" Content="Enter what level to play:" HorizontalAlignment="Left" Margin="44,60,0,0" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="Label3" Content="Enter how many moves you used:" HorizontalAlignment="Left" Margin="44,106,0,0" VerticalAlignment="Top" Width="206"/>
         <Label x:Name="NameLabel" Content="Level:" HorizontalAlignment="Left" Margin="429,337,0,-2.8" VerticalAlignment="Top" Width="100"/>
         <Label x:Name="ScoreLabel" Content="Players higest score and level:" HorizontalAlignment="Left" Margin="44,200,0,0" VerticalAlignment="Top" Width="164"/>
         <ListBox x:Name="PlayerNamesListBox" HorizontalAlignment="Left" Height="81" Margin="450,25,0,0" VerticalAlignment="Top" Width="266" DisplayMemberPath="Name" SelectionChanged="PlayerNamesListBox_SelectionChanged"/>

@@ -27,7 +27,7 @@ namespace EFlabb2
         public MainWindow()
         {
             InitializeComponent();
-            PrintListBoxInfo(); 
+            PrintListBoxInfo();
         }
         public void PrintListBoxInfo()
         {
@@ -96,7 +96,7 @@ namespace EFlabb2
             using (GameContext context = new GameContext(connectionString))
             {
                 return (from x in context.Levels
-                        where x.LevelId == playerid 
+                        where x.LevelId == playerid
                         select x).SingleOrDefault();
             }
         }
@@ -106,12 +106,12 @@ namespace EFlabb2
             using (GameContext context = new GameContext(connectionString))
             {
                 return (from x in context.Rounds.Include("Player").Include("Level")
-                        where x.RoundId == roundid 
+                        where x.RoundId == roundid
                         select x).SingleOrDefault();
             }
         }
 
-        public void ScoreCounted()
+        public void ScoreCounted() // onödig mest troligt.
         {
             using (GameContext context = new GameContext(connectionString))
             {
@@ -128,17 +128,23 @@ namespace EFlabb2
                 try
                 {
                     Player player = GetPlayerDataByName(NameTextBox.Text);
+                    Level level1 = GetLevelDataById(int.Parse(LevelTextBox.Text)); //level går inte att uppdatera.
 
-                    if (player != null)
+                    if (player != null || level1 != null)
                     {
                         Round round = GetRoundDataByPlayerIdLevelId(player.Id, int.Parse(LevelTextBox.Text));
+
+
                         if (round != null)
                         {
-                            if (round.UsedMoves > int.Parse(MovesTextBox.Text))
+                            if (round.UsedMoves > int.Parse(MovesTextBox.Text) || level1.LevelId == int.Parse(LevelTextBox.Text))
                             {
                                 int level = int.Parse(LevelTextBox.Text);
+                                int round1 = int.Parse(MovesTextBox.Text);
                                 var r = context.Rounds.Where(rr => rr.PlayerId == round.PlayerId && rr.LevelId == level).SingleOrDefault();
+                                var l = context.Levels.Where(ll => ll.LevelId == level1.LevelId && ll.AvailableMoves == round1).SingleOrDefault();
                                 r.UsedMoves = int.Parse(MovesTextBox.Text);
+                                l.AvailableMoves = int.Parse(LevelTextBox.Text);
                                 context.SaveChanges();
 
                                 PlayerNamesListBox.Items.Clear();
@@ -157,11 +163,11 @@ namespace EFlabb2
                         Round newRound = new Round();
                         newRound.UsedMoves = int.Parse(MovesTextBox.Text);
                         newRound.LevelId = int.Parse(LevelTextBox.Text);
-                        newRound.PlayerId = newPlayer.Id;   
+                        newRound.PlayerId = newPlayer.Id;
                         context.Rounds.Add(newRound);
                         Level newLevel = new Level();
                         newLevel.AvailableMoves = int.Parse(LevelTextBox.Text);
-                        newLevel.LevelId = int.Parse(LevelTextBox.Text);
+                        //newLevel.LevelId = int.Parse(LevelTextBox.Text);
                         context.Levels.Add(newLevel);
                         context.SaveChanges();
 
@@ -194,7 +200,7 @@ namespace EFlabb2
             {
                 var query = from round in context.Rounds.ToList()
                             join l in context.Levels on round.LevelId equals l.LevelId
-                            where round.PlayerId == PlayerNamesListBox.SelectedIndex
+                            where round.PlayerId == PlayerNamesListBox.SelectedIndex + 1
                             select new { Level = round.LevelId, UsedMoves = round.UsedMoves, MovesLeft = l.AvailableMoves - round.UsedMoves };
                 foreach (var x in query)
                 {
