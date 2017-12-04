@@ -128,23 +128,18 @@ namespace EFlabb2
                 try
                 {
                     Player player = GetPlayerDataByName(NameTextBox.Text);
-                    Level level1 = GetLevelDataById(int.Parse(LevelTextBox.Text)); //level går inte att uppdatera.
 
-                    if (player != null || level1 != null)
+                    if (player != null)
                     {
                         Round round = GetRoundDataByPlayerIdLevelId(player.Id, int.Parse(LevelTextBox.Text));
 
-
                         if (round != null)
                         {
-                            if (round.UsedMoves > int.Parse(MovesTextBox.Text) || level1.LevelId == int.Parse(LevelTextBox.Text))
+                            if (round.UsedMoves > int.Parse(MovesTextBox.Text))
                             {
                                 int level = int.Parse(LevelTextBox.Text);
-                                int round1 = int.Parse(MovesTextBox.Text);
                                 var r = context.Rounds.Where(rr => rr.PlayerId == round.PlayerId && rr.LevelId == level).SingleOrDefault();
-                                var l = context.Levels.Where(ll => ll.LevelId == level1.LevelId && ll.AvailableMoves == round1).SingleOrDefault();
                                 r.UsedMoves = int.Parse(MovesTextBox.Text);
-                                l.AvailableMoves = int.Parse(LevelTextBox.Text);
                                 context.SaveChanges();
 
                                 PlayerNamesListBox.Items.Clear();
@@ -152,6 +147,15 @@ namespace EFlabb2
                                 RoundListBox.Items.Clear();
                                 PrintListBoxInfo();
                             }
+                        }
+                        else
+                        {
+                            Round newRound = new Round();
+                            newRound.UsedMoves = int.Parse(MovesTextBox.Text);
+                            newRound.LevelId = int.Parse(LevelTextBox.Text);
+                            newRound.PlayerId = player.Id;
+                            context.Rounds.Add(newRound);
+                            context.SaveChanges();
                         }
                     }
                     else
@@ -165,10 +169,6 @@ namespace EFlabb2
                         newRound.LevelId = int.Parse(LevelTextBox.Text);
                         newRound.PlayerId = newPlayer.Id;
                         context.Rounds.Add(newRound);
-                        Level newLevel = new Level();
-                        newLevel.AvailableMoves = int.Parse(LevelTextBox.Text);
-                        //newLevel.LevelId = int.Parse(LevelTextBox.Text);
-                        context.Levels.Add(newLevel);
                         context.SaveChanges();
 
                         PlayerNamesListBox.Items.Clear();
