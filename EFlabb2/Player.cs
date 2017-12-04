@@ -17,6 +17,7 @@ namespace EFlabb2
 
         [Key]
         public int Id { get; set; }
+        //[Required]       ska detta läggas in?
         public string Name { get; set; }
 
 

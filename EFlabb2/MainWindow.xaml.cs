@@ -27,28 +27,50 @@ namespace EFlabb2
         public MainWindow()
         {
             InitializeComponent();
-            Player player = GetPlayerDataByName("Evert");
-            GetLevelDataById(2); //by available moves??
-            GetRoundDataByScore(2); // by score??
-        }
+            PrintListBoxInfo();
 
-        public void Add(GameContext context) //ändra till passande namn på add
+        }
+        public void PrintListBoxInfo()
         {
-            Player p = new Player();
-            p.Name = "Johanna";
-            //p.Rounds = new Round();
+            using (GameContext context = new GameContext(connectionString))
+            {
+                List<Player> playerList = context.Players.ToList();
+                foreach (var p in playerList)
+                {
+                    PlayerNamesListBox.Items.Add(p);
+                }
 
-            Round r = new Round();
-            r.RoundId = 2;
-            r.Score = 3;
-            //r.PlayerId = ??
-            //r.LevelId = ??
-            //r.Player = p;
+                List<Level> levelList = context.Levels.ToList();
+                foreach (var l in levelList)
+                {
+                    LevelListBox.Items.Add(l);
+                }
 
-            //p.Rounds.Add(r);
-            context.Players.Add(p);
-            context.SaveChanges();
+                List<Round> roundList = context.Rounds.ToList();
+                foreach (var r in roundList)
+                {
+                    RoundListBox.Items.Add(r);
+                }
+            }
         }
+
+        //public void Add(GameContext context) //ändra till passande namn på add
+        //{
+        //    Player p = new Player();
+        //    p.Name = "Johanna";
+        //    //p.Rounds = new Round();
+
+        //    Round r = new Round();
+        //    r.RoundId = 2;
+        //    r.Score = 3;
+        //    //r.PlayerId = ??
+        //    //r.LevelId = ??
+        //    //r.Player = p;
+
+        //    //p.Rounds.Add(r);
+        //    context.Players.Add(p);
+        //    context.SaveChanges();
+        //}
 
         public Player GetPlayerDataByName(string playerName)
         {
@@ -65,7 +87,7 @@ namespace EFlabb2
             using (GameContext context = new GameContext(connectionString))
             {
                 return (from x in context.Rounds.Include("Player").Include("Level")
-                        where x.PlayerId == playerId && x.LevelId == levelId //kolla detta villkor. by x.roundid?? döp om roundid till score?
+                        where x.PlayerId == playerId && x.LevelId == levelId
                         select x).SingleOrDefault();
             }
         }
@@ -109,6 +131,11 @@ namespace EFlabb2
                                 var r = context.Rounds.Where(rr => rr.PlayerId == round.PlayerId && rr.LevelId == level).SingleOrDefault();
                                 r.Score = int.Parse(MovesTextBox.Text);
                                 context.SaveChanges();
+
+                                PlayerNamesListBox.Items.Clear();
+                                LevelListBox.Items.Clear();
+                                RoundListBox.Items.Clear();
+                                PrintListBoxInfo();
                             }
                         }
                     }
@@ -121,11 +148,24 @@ namespace EFlabb2
                         Round newRound = new Round();
                         newRound.Score = int.Parse(MovesTextBox.Text);
                         newRound.LevelId = int.Parse(LevelTextBox.Text);
-                        newRound.PlayerId = newPlayer.Id;
+                        newRound.PlayerId = newPlayer.Id;   
                         context.Rounds.Add(newRound);
                         context.SaveChanges();
+
+                        PlayerNamesListBox.Items.Clear();
+                        LevelListBox.Items.Clear();
+                        RoundListBox.Items.Clear();
+                        PrintListBoxInfo();
                     }
+                    NameTextBox.Text = string.Empty;
+                    LevelTextBox.Text = string.Empty;
+                    MovesTextBox.Text = string.Empty;
+                    //PlayerNamesListBox.Items.Clear();
+                    //LevelListBox.Items.Clear();
+                    //RoundListBox.Items.Clear();
+                    //PrintListBoxInfo();
                 }
+
                 catch (Exception ex)
                 {
                     MessageBox.Show("Nu blev det lite tokigt.");
