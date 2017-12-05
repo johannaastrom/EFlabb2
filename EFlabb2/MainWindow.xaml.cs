@@ -121,6 +121,7 @@ namespace EFlabb2
                         newPlayer.Name = NameTextBox.Text;
                         context.Players.Add(newPlayer);
                         context.SaveChanges();
+
                         Round newRound = new Round();
                         newRound.UsedMoves = int.Parse(MovesTextBox.Text);
                         newRound.LevelId = int.Parse(LevelTextBox.Text);
@@ -140,7 +141,7 @@ namespace EFlabb2
 
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Nu blev det lite tokigt.");
+                    MessageBox.Show("Nu blev det lite tokigt. Du har försökt spela en level som inte finns.");
                 }
             }
         }
@@ -161,6 +162,23 @@ namespace EFlabb2
                     PrintPlayerScoreListBox.Items.Add(x);
                 }
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            using (GameContext context = new GameContext(connectionString))
+            {
+                Level newLevel = new Level();
+                newLevel.AvailableMoves = int.Parse(AddNewLevelTextBox.Text);
+                context.Levels.Add(newLevel);
+                context.SaveChanges();
+
+                PlayerNamesListBox.Items.Clear();
+                LevelListBox.Items.Clear();
+                RoundListBox.Items.Clear();
+                PrintListBoxInfo();
+            }
+            AddNewLevelTextBox.Text = string.Empty;
         }
 
         private void PrintPlayerLevelListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
