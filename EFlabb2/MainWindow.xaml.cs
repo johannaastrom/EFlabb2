@@ -29,6 +29,8 @@ namespace EFlabb2
             InitializeComponent();
             PrintListBoxInfo();
         }
+
+        //Method that prints all players, levels and rounds in the listboxes.
         public void PrintListBoxInfo()
         {
             using (GameContext context = new GameContext(connectionString))
@@ -53,24 +55,7 @@ namespace EFlabb2
             }
         }
 
-        //public void Add(GameContext context) //ändra till passande namn på add
-        //{
-        //    Player p = new Player();
-        //    p.Name = "Johanna";
-        //    //p.Rounds = new Round();
-
-        //    Round r = new Round();
-        //    r.RoundId = 2;
-        //    r.Score = 3;
-        //    //r.PlayerId = ??
-        //    //r.LevelId = ??
-        //    //r.Player = p;
-
-        //    //p.Rounds.Add(r);
-        //    context.Players.Add(p);
-        //    context.SaveChanges();
-        //}
-
+        //Query to get players name.
         public Player GetPlayerDataByName(string playerName)
         {
             using (GameContext context = new GameContext(connectionString))
@@ -81,6 +66,7 @@ namespace EFlabb2
             }
         }
 
+        //Query to get Id's.
         public Round GetRoundDataByPlayerIdLevelId(int playerId, int levelId)
         {
             using (GameContext context = new GameContext(connectionString))
@@ -91,36 +77,7 @@ namespace EFlabb2
             }
         }
 
-        public Level GetLevelDataById(int playerid)
-        {
-            using (GameContext context = new GameContext(connectionString))
-            {
-                return (from x in context.Levels
-                        where x.LevelId == playerid
-                        select x).SingleOrDefault();
-            }
-        }
-
-        public Round GetRoundDataByScore(int roundid)
-        {
-            using (GameContext context = new GameContext(connectionString))
-            {
-                return (from x in context.Rounds.Include("Player").Include("Level")
-                        where x.RoundId == roundid
-                        select x).SingleOrDefault();
-            }
-        }
-
-        public void ScoreCounted() // onödig mest troligt.
-        {
-            using (GameContext context = new GameContext(connectionString))
-            {
-                var query = from r in context.Rounds
-                            join l in context.Levels on r.LevelId equals l.LevelId
-                            select new { Score = l.AvailableMoves - r.UsedMoves };
-            }
-        }
-
+        //Updating or creates new objects if it doesnt already exist in the data base.
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             using (GameContext context = new GameContext(connectionString))
@@ -188,10 +145,7 @@ namespace EFlabb2
             }
         }
 
-        private void UpdateButton1_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
+        //Prints the selected players levels and used moves.
         private void PlayerNamesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             PrintPlayerScoreListBox.Items.Clear();
@@ -210,6 +164,9 @@ namespace EFlabb2
         }
 
         private void PrintPlayerLevelListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+        }
+        private void UpdateButton1_Click(object sender, RoutedEventArgs e)
         {
         }
     }
