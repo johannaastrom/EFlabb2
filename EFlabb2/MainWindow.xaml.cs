@@ -164,6 +164,7 @@ namespace EFlabb2
             }
         }
 
+        //Button to add level with available moves.
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             using (GameContext context = new GameContext(connectionString))
