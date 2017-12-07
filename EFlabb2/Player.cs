@@ -20,3 +20,4 @@ namespace EFlabb2
         public string Avatar { get; set; }
     }
 }
+    
