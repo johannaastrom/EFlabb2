@@ -1,0 +1,1 @@
+﻿select * from players inner join rounds on players.id = rounds.PlayerId

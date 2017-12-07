@@ -5,8 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EFlabb2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="388.6" Width="751.4">
+    <Grid x:Name="UpdateButton">
+        <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Height="23" Margin="44,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206"/>
+        <TextBox x:Name="LevelTextBox" HorizontalAlignment="Left" Height="23" Margin="44,83,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206"/>
+        <TextBox x:Name="MovesTextBox" HorizontalAlignment="Left" Height="23" Margin="44,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="206" RenderTransformOrigin="0.175,-0.635"/>
+        <Label x:Name="Label1" Content="Enter your name:" HorizontalAlignment="Left" Margin="44,7,0,0" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="Label2" Content="Enter what level to play:" HorizontalAlignment="Left" Margin="44,60,0,0" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="Label3" Content="Enter how many moves you used:" HorizontalAlignment="Left" Margin="44,106,0,0" VerticalAlignment="Top" Width="206"/>
+        <Label x:Name="NameLabel" Content="" HorizontalAlignment="Left" Margin="616,341,0,-5.8" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="ScoreLabel" Content="Players higest score and level:" HorizontalAlignment="Left" Margin="44,200,0,0" VerticalAlignment="Top" Width="294"/>
+        <ListBox x:Name="PlayerNamesListBox" HorizontalAlignment="Left" Height="81" Margin="450,38,0,0" VerticalAlignment="Top" Width="266" DisplayMemberPath="Name" SelectionChanged="PlayerNamesListBox_SelectionChanged"/>
+        <ListBox x:Name="LevelListBox" HorizontalAlignment="Left" Height="76" Margin="450,150,0,0" VerticalAlignment="Top" Width="266" DisplayMemberPath="LevelId"/>
+        <ListBox x:Name="RoundListBox" HorizontalAlignment="Left" Height="82" Margin="450,253,0,0" VerticalAlignment="Top" Width="266" DisplayMemberPath="RoundId"/>
+        <Button x:Name="AddButton" Content="Play!" HorizontalAlignment="Left" Margin="44,159,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Create new level" HorizontalAlignment="Left" Margin="283,164,0,0" VerticalAlignment="Top" Width="114" Click="Button_Click_1"/>
+        <ListBox x:Name="PrintPlayerScoreListBox" HorizontalAlignment="Left" Height="109" Margin="44,226,0,0" VerticalAlignment="Top" Width="294"/>
+        <ListBox x:Name="PrintPlayerLevelListBox" HorizontalAlignment="Left" Height="16" Margin="717,339,0,0" VerticalAlignment="Top" Width="18" SelectionChanged="PrintPlayerLevelListBox_SelectionChanged" RenderTransformOrigin="25.869,7.438"/>
+        <TextBox x:Name="AddNewLevelTextBox" HorizontalAlignment="Left" Height="23" Margin="308,126,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68"/>
+        <Label Content="To create a new level:&#xD;&#xA;&#xD;&#xA;Next level nr is created &#xD;&#xA;automatically, please&#xD;&#xA;enter how many moves &#xD;&#xA;it should contain:" HorizontalAlignment="Left" Margin="283,10,0,0" VerticalAlignment="Top" Width="138" Height="116"/>
+        <Label Content="Rounds" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="450,226,0,0" Width="171"/>
+        <Label Content="All existing levels" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="450,119,0,0" Width="155"/>
+        <Label Content="All player names" HorizontalAlignment="Left" Margin="450,12,0,0" VerticalAlignment="Top" Width="171"/>
+
     </Grid>
 </Window>
