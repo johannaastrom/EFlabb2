@@ -3,7 +3,7 @@ namespace EFlabb2.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class changes : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {

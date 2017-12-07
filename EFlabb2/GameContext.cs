@@ -9,7 +9,7 @@ namespace EFlabb2
 {
     public class GameContext : DbContext
     {
-        public GameContext() : base() { }
+        public GameContext() : base(connectionString) { }
 
         public const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AngryBirdsGame;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 

@@ -62,9 +62,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GameContext.cs" />
-    <Compile Include="Migrations\201712041337188_changes.cs" />
-    <Compile Include="Migrations\201712041337188_changes.Designer.cs">
-      <DependentUpon>201712041337188_changes.cs</DependentUpon>
+    <Compile Include="Migrations\201712071013259_initial.cs" />
+    <Compile Include="Migrations\201712071013259_initial.Designer.cs">
+      <DependentUpon>201712071013259_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712071016106_addedAvatar.cs" />
+    <Compile Include="Migrations\201712071016106_addedAvatar.Designer.cs">
+      <DependentUpon>201712071016106_addedAvatar.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Round.cs" />
@@ -97,8 +101,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Migrations\201712041337188_changes.resx">
-      <DependentUpon>201712041337188_changes.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201712071013259_initial.resx">
+      <DependentUpon>201712071013259_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712071016106_addedAvatar.resx">
+      <DependentUpon>201712071016106_addedAvatar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
